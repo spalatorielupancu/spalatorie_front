@@ -191,7 +191,7 @@ export default function GalerieAdmin() {
           {editing ? 'Editează perechea' : 'Adaugă pereche nouă'}
         </h3>
         <form onSubmit={save} className="admin-form">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="admin-grid-2">
             <div className="admin-field">
               <label>Titlu (ex: Covor persan)</label>
               <input value={form.title} onChange={(e) => set('title', e.target.value)} required />
@@ -202,7 +202,7 @@ export default function GalerieAdmin() {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="admin-grid-2" style={{ gap: 16 }}>
             <ImagePicker
               label="Poză ÎNAINTE"
               value={form.beforeUrl}
@@ -215,7 +215,7 @@ export default function GalerieAdmin() {
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="admin-grid-2">
             <div className="admin-field">
               <label>Ordine (număr mic = primul)</label>
               <input type="number" value={form.order} onChange={(e) => set('order', Number(e.target.value))} />
@@ -242,6 +242,7 @@ export default function GalerieAdmin() {
       </div>
 
       <div className="admin-card">
+        <div className="admin-table-wrap">
         <table className="admin-table">
           <thead>
             <tr>
@@ -293,6 +294,7 @@ export default function GalerieAdmin() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );

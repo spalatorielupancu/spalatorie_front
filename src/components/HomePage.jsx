@@ -51,6 +51,30 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    let io;
+    const t = setTimeout(() => {
+      io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+            // Eliminăm clasele după reveal ca să nu blocheze tranziția hover
+            e.target.addEventListener('transitionend', () => {
+              e.target.classList.remove('reveal', 'is-visible');
+            }, { once: true });
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document
+        .querySelectorAll('.head, .svc-card, .step, .feature, .stat, .gal-card, .t-card, .c-channel, .map-card')
+        .forEach(el => { el.classList.add('reveal'); io.observe(el); });
+    }, 100);
+
+    return () => { clearTimeout(t); io?.disconnect(); };
+  }, []);
+
   return (
     <>
       <Nav content={content} />

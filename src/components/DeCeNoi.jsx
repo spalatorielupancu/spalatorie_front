@@ -1,3 +1,40 @@
+import { useEffect, useRef, useState } from 'react';
+
+function useCountUp(target, duration = 1400) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof target !== 'number') return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+
+      const start = performance.now();
+      const tick = (now) => {
+        const raw = Math.min((now - start) / duration, 1);
+        const t   = 1 - Math.pow(1 - raw, 3);
+        setCount(Math.round(t * target));
+        if (raw < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return [count, ref];
+}
+
+function StatNumber({ n }) {
+  const parsed = parseInt(n, 10);
+  const [count, ref] = useCountUp(isNaN(parsed) ? 0 : parsed);
+  return <span ref={ref}>{isNaN(parsed) ? n : count}</span>;
+}
+
 const FEATURES = [
   {
     title: 'Curățare în profunzime',
@@ -65,7 +102,7 @@ export default function DeCeNoi({ content }) {
             { n: '24',   sup: 'h',   label: 'programare prin telefon sau WhatsApp' },
           ].map((s) => (
             <div key={s.sup} className="stat">
-              <div className="stat-n">{s.n}<sup>{s.sup}</sup></div>
+              <div className="stat-n"><StatNumber n={s.n} /><sup>{s.sup}</sup></div>
               <div className="stat-label">{s.label}</div>
             </div>
           ))}

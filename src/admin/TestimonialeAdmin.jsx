@@ -62,7 +62,7 @@ export default function TestimonialeAdmin() {
       <div className="admin-card">
         <h3 style={{ marginBottom: 16, fontSize: 15 }}>{editing ? 'Editează testimonial' : 'Adaugă testimonial nou'}</h3>
         <form onSubmit={save} className="admin-form">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="admin-grid-2">
             <div className="admin-field">
               <label>Nume</label>
               <input value={form.name} onChange={(e) => set('name', e.target.value)} required placeholder="ex: Maria P." />
@@ -76,7 +76,7 @@ export default function TestimonialeAdmin() {
             <label>Recenzie</label>
             <textarea value={form.quote} onChange={(e) => set('quote', e.target.value)} required placeholder='„Textul recenziei..."' rows={3} />
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="admin-grid-2">
             <div className="admin-field">
               <label>Stele (1-5)</label>
               <input type="number" min={1} max={5} value={form.stars} onChange={(e) => set('stars', Number(e.target.value))} />
@@ -96,6 +96,7 @@ export default function TestimonialeAdmin() {
       </div>
 
       <div className="admin-card">
+        <div className="admin-table-wrap">
         <table className="admin-table">
           <thead>
             <tr>
@@ -129,6 +130,7 @@ export default function TestimonialeAdmin() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );

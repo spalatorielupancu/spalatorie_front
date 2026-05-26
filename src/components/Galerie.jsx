@@ -26,12 +26,32 @@ function BeforeAfterSlider({ beforeUrl, afterUrl, title }) {
   const onPointerUp = () => { dragging.current = false; };
 
   const pill = {
-    position: 'absolute', bottom: 10,
-    background: 'rgba(255,255,255,.92)', color: '#001a33',
+    position: 'absolute', top: 10,
+    background: 'rgba(0,26,51,.55)', color: '#fff',
     fontSize: 10, fontWeight: 500, letterSpacing: '0.14em',
     textTransform: 'uppercase', padding: '4px 10px', borderRadius: 999,
     pointerEvents: 'none', userSelect: 'none',
+    backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)',
   };
+
+  // Placeholder când nu există imaginile încă
+  if (!beforeUrl && !afterUrl) {
+    return (
+      <div style={{
+        aspectRatio: '4/3', background: 'linear-gradient(135deg,#e0edf6 0%,#d0e4f0 100%)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        gap: 10, color: '#7a9bbf',
+      }}>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity=".6">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: .7 }}>
+          Înainte / După
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -70,10 +90,10 @@ function BeforeAfterSlider({ beforeUrl, afterUrl, title }) {
         />
       )}
 
-      {/* Label Înainte */}
+      {/* Label Înainte — sus-stânga */}
       <span style={{ ...pill, left: 10 }}>Înainte</span>
 
-      {/* Label După */}
+      {/* Label După — sus-dreapta */}
       <span style={{ ...pill, right: 10 }}>După</span>
 
       {/* Linia + bulina de glisare */}

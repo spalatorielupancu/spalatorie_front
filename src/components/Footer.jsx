@@ -16,9 +16,7 @@ export default function Footer({ content }) {
           <a href={phoneHref}>{phone}</a>
           <a href={waHref} target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <span>© {new Date().getFullYear()}</span>
-          {import.meta.env.DEV && (
-            <a href="/admin/login" style={{ fontSize: 11, opacity: .35, letterSpacing: '0.08em' }}>admin</a>
-          )}
+          <a href="/admin/login" style={{ fontSize: 11, opacity: .35, letterSpacing: '0.08em' }}>admin</a>
         </div>
       </div>
     </footer>
